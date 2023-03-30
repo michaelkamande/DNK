@@ -1,0 +1,265 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-7">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <div class="form-inline">
+                                    <form method="POST" class="search-form">
+                                        {% csrf_token %}
+                                        <input type="text" name="search" placeholder="Rechercher..." class="form-control">
+                                        <button class="btn btn-info btn-sm form-control fa fa-search" type="submit"></button>
+                                        {% if request.method == 'POST' %}
+                                        <a href="{% url 'tenants' %}" class="btn btn-outline-info form-control">Tout Afficher</a>
+                                        {% endif %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'appartments' %}">Appartements</a></li>
+                                    <li><a href="{% url 'tenants' %}">Locataires</a></li>
+                                    <li class="active">Liste</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Locataires</strong>
+                            <a href="{% url 'tenant_add' %}" class="btn btn-info float-right">+ Nouveau Locataire</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">Téléphone</th>
+                                        <th scope="col">Contrat</th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'tenant_view' item.pk %}">{{ item.firstname }} {{ item.lastname }}</a></td>
+                                        <td>{% if item.phone %}{{ item.phone }}{% endif %}</td>
+                                 
+                                        <td>
+                                            {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.isActive %}
+                                                <span class="badge btn-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Inactif</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'tenant_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+
+                                            <!--<a href="{% url 'tenant_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                            <a href="{% url 'tenant_delete' item.pk %}" class="btn btn-danger">X</a>-->
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% for item in lookup1 %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'tenant_view' item.pk %}">{{ item.firstname }} {{ item.lastname }}</a></td>
+                                        <td>{% if item.phone %}{{ item.phone }}{% endif %}</td>
+                                 
+                                        <td>
+                                            {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.isActive %}
+                                                <span class="badge btn-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Inactif</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'tenant_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+
+                                            <!--<a href="{% url 'tenant_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                            <a href="{% url 'tenant_delete' item.pk %}" class="btn btn-danger">X</a>-->
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% for item in lookup2 %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'tenant_view' item.pk %}">{{ item.firstname }} {{ item.lastname }}</a></td>
+                                        <td>{% if item.phone %}{{ item.phone }}{% endif %}</td>
+                                 
+                                        <td>
+                                            {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.isActive %}
+                                                <span class="badge btn-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Inactif</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'tenant_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+
+                                            <!--<a href="{% url 'tenant_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                            <a href="{% url 'tenant_delete' item.pk %}" class="btn btn-danger">X</a>-->
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% for item in lookup3 %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'tenant_view' item.pk %}">{{ item.firstname }} {{ item.lastname }}</a></td>
+                                        <td>{% if item.phone %}{{ item.phone }}{% endif %}</td>
+                                 
+                                        <td>
+                                            {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.isActive %}
+                                                <span class="badge btn-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Inactif</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'tenant_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+
+                                            <!--<a href="{% url 'tenant_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                            <a href="{% url 'tenant_delete' item.pk %}" class="btn btn-danger">X</a>-->
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% for item in lookup4 %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'tenant_view' item.pk %}">{{ item.firstname }} {{ item.lastname }}</a></td>
+                                        <td>{% if item.phone %}{{ item.phone }}{% endif %}</td>
+                                 
+                                        <td>
+                                            {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.isActive %}
+                                                <span class="badge btn-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Inactif</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'tenant_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+
+                                            <!--<a href="{% url 'tenant_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                            <a href="{% url 'tenant_delete' item.pk %}" class="btn btn-danger">X</a>-->
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% for item in lookup5 %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'tenant_view' item.pk %}">{{ item.firstname }} {{ item.lastname }}</a></td>
+                                        <td>{% if item.phone %}{{ item.phone }}{% endif %}</td>
+                                 
+                                        <td>
+                                            {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.isActive %}
+                                                <span class="badge btn-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Inactif</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'tenant_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+
+                                            <!--<a href="{% url 'tenant_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                            <a href="{% url 'tenant_delete' item.pk %}" class="btn btn-danger">X</a>-->
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% for item in lookup6 %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'tenant_view' item.pk %}">{{ item.firstname }} {{ item.lastname }}</a></td>
+                                        <td>{% if item.phone %}{{ item.phone }}{% endif %}</td>
+                                 
+                                        <td>
+                                            {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.isActive %}
+                                                <span class="badge btn-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Inactif</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'tenant_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+
+                                            <!--<a href="{% url 'tenant_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                            <a href="{% url 'tenant_delete' item.pk %}" class="btn btn-danger">X</a>-->
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+

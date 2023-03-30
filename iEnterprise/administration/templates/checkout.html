@@ -1,0 +1,136 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row col-lg-3">
+               		<a href="{% url 'order' %}" id="form-button" class="btn btn-danger btn-block" type="submit"> ← Modifier Commande</a>
+					<hr>
+                </div>
+            </div>
+        </div>
+
+
+	<div class="content row">
+
+
+		<div class="card col-lg-7">
+					
+		<div class="card-header">
+				
+                            <strong class="card-title">Infos. Client</strong>
+                            <a href="{% url 'customer_add' %}" class="btn btn-info float-right">+ Nouveau Client</a>
+                   
+                        </div>
+		<div class="content">
+
+			<div class="card-body">
+				<form method="POST">
+					{% csrf_token %}
+					<div id="user-info">
+						<div class="">
+							{{ form|crispy }}
+						</div>
+						
+					</div>
+					
+					<hr>
+					<button id="form-button" class="btn btn-info btn-block" type="submit">Valider</button>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+
+<div class="content col-lg-4 float-right card ml-5">
+		<div>
+
+			<div class="text-center">
+                            <strong class="content btn-outline-info">
+                            	<font size="6px">
+                            		#{{ items_in_cart }} -       Total: 
+	                            	{% if object.get_cart_total %}
+										{{ object.get_cart_total|floatformat:0 }}<span> </span>{{ ent.devise }}
+									{% else %}
+										0<span> </span>{{ ent.devise }}
+									{% endif %}
+	                            </font>
+                            </strong>
+                        </div>
+			<table class="table table-striped text-center">
+                                <thead>
+                                	{% if object.get_cart_total %}
+                                    <tr>
+                                        <!--<th scope="col">#</th>-->
+                                        <th scope="col">Article</th>
+                                        <th scope="col">Prix</th>
+                                        <th scope="col">Qté</th>
+                                        <th scope="col">Total</th>                                 
+                                    </tr>
+                                    {% endif %}
+                                </thead>
+                                <tbody>
+                                    {% for item in object.items.all %}
+                                    <tr>
+                                            <!--<td>{{ forloop.counter }}</td>-->
+                                            <td>{{ item.item.designation }}</td>
+                                            
+                                            <td>
+                                            	
+                                            	{% if item.item.discount_price %}
+													{{ item.item.discount_price|floatformat:0 }}{{ ent.devise }}
+													<p class="btn-outline-danger"><small>Promotion</small></p>
+												{% else %}
+													{{ item.item.sell_price|floatformat:0 }}{{ ent.devise }}
+												{% endif %}
+                                            </td>
+
+                                            <td>
+                                            	<div>
+                                            		{{ item.quantity }}
+                                            	</div>
+                                            	<div>
+                                            		{% for i in items_list %}
+                                            		{% if i.slug == item.item.slug %}
+                                            			{% if i.stock < 1 %}
+                                            			{% else %}
+                                            			{% endif %}
+                                            		{% endif %}
+                                            		{% endfor %}
+                                            		{% if item.quantity > 1 %}	
+                                            		
+                                            		{% else %}
+                                            		
+                                            		{% endif %}
+                                            	</div>
+                                            </td>
+                                            <td>
+                                            	
+                                            	{% if item.item.discount_price  %}
+													{{ item.get_total_discount|floatformat:0 }}{{ ent.devise }}
+												{% else %}
+													{{ item.get_total|floatformat:0 }}{{ ent.devise }}
+												{% endif %}
+                                            </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <hr>
+                            <div class="text-center mb-3">
+                            	iMart &copy; {% now "Y" %} <a href="https://www.kamandegroup.com" target="_blank">KITS SARL</a>
+                            </div>
+		</div>
+	</div>
+
+	</div>
+{% endblock %}

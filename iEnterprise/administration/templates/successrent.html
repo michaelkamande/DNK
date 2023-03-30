@@ -1,0 +1,68 @@
+{% extends 'master.html' %}
+
+{% block script %}
+{% endblock %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+        
+                        <div class="card-body">
+                        	
+                        		<h1 class="mb-5" style="color: #07da63;">Paiement réussi !</h1>
+                        		{% for i in item %}
+                        		{% if i.tenant == None %}
+                        		<h4 class="mb-5">Pour : <b>N/A</b></h4>
+                        		{% else %}
+	                            <h4 class="mb-5">Pour : <b><a href="{% url 'tenant_view' i.tenant.pk %}">{{ i.tenant }}</a></b></h4>
+	                            {% endif %}
+	                            <br>
+	                           
+	                           <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Montant dû</th>
+                                        <th scope="col">Montant perçu</th>
+                                        <th scope="col">Montant restant</th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                            <td>{{ i.due_amount|floatformat:0 }}<span> </span>$</td>
+                                            <td>{{ i.cash|floatformat:0 }}<span> </span>$</td>
+                                            <td>{{ i.pending_payment|floatformat:0 }}<span> </span>$</td>
+                                            
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+
+
+	                            <br>
+	                            {% if i.change > 0 %}
+	                            <h3>Montant à rendre : <b style="color: red;">{{ i.change|floatformat:0 }}<span> </span>$</b></h3>
+	                            {% endif %}
+	                            {% endfor %}
+	                            <br>
+                                <button style="border:none; background: white;" onclick="this.hidden=true">
+                                    <a href="{% url 'invoicerent' %}" target="_blank" class="btn btn-dark">Imprimer Facture</a>
+                                </button>
+
+	                            <a href="{% url 'payrent' %}" class="btn btn-info">+ Nouveau paiement</a>
+                        	
+                            
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

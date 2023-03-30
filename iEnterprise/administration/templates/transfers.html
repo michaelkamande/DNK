@@ -1,0 +1,112 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-7">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <div class="form-inline">
+                                    <form method="POST" class="search-form">
+                                        {% csrf_token %}
+                                        <input type="text" name="search" placeholder="Rechercher..." class="form-control">
+                                        <button class="btn btn-info btn-sm form-control fa fa-search" type="submit"></button>
+                                        {% if request.method == 'POST' %}
+                                        <a href="{% url 'income' %}" class="btn btn-outline-info form-control">Tout Afficher</a>
+                                        {% endif %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'bankaccounts' %}">Comptes financiers</a></li>
+                                    <li><a href="{% url 'transfers' %}">Virements</a></li>
+                                    <li class="active">Liste</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Virements internes</strong>
+                            <a href="{% url 'transfer_add' %}" class="btn btn-info float-right">+ Nouveau Virement</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Compte source</th>
+                                        <th scope="col">Compte destination</th>
+                                        <th scope="col">Montant</th>
+                                        <th scope="col">Libéllé</th>
+                                        <th scope="col">Date</th>                              
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ item.from_account }}</td>
+                                            <td>{{ item.to_account }}</td>
+                                            <td>{{ item.amount|floatformat:0 }}<span> </span>$</td>
+                                            <td>{{ item.description }}</td>
+                                            <td>{{ item.date_created|date:'d/m/Y à H:i' }}</td>
+
+
+                                            <td>
+                                            <a href="{% url 'transfer_delete' item.pk %}" class="btn btn-outline-danger">X</a></td>
+
+                                            
+                                    </tr>
+                                    {% endfor %}
+
+                                    {% for item in lookup1 %}
+                                    <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ item.from_account }}</td>
+                                            <td>{{ item.to_account }}</td>
+                                            <td>{{ item.amount|floatformat:0 }}<span> </span>$</td>
+                                            <td>{{ item.description }}</td>
+                                            <td>{{ item.date_created|date:'d/m/Y à H:i' }}</td>
+
+
+                                            <td>
+                                            <a href="{% url 'transfer_delete' item.pk %}" class="btn btn-outline-danger">X</a></td>
+
+                                            
+                                    </tr>
+                                    {% endfor %}
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

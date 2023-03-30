@@ -1,0 +1,33 @@
+{% extends "master.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+       <div class="content">
+            <div class="animated fadeIn">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+							<div class="row">	
+
+								<div class="form-group col-md-12">
+									<form method="POST" enctype="multipart/form-data">
+										{% csrf_token %}
+										<fieldset class="form-group">
+											<legend class="border-bottom mb-4">Modifier Détails Entreprise</legend>
+											{{ e_form|crispy }}
+											{{ l_form|crispy }}
+										</fieldset>
+										<div class="form-group">
+											<button class="btn btn-outline-info" type="submit">Modifiez</button>
+										</div>
+									</form>
+								</div>	
+                        </div>
+                    </div>
+                </div>
+        </div>
+</div>
+</div>
+
+{% endblock %}

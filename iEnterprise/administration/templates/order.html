@@ -1,0 +1,217 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-8">
+                        <div class="page-header float-left">
+                                <div class="form-inline">
+		                            <form method="POST" class="search-form">
+                                        {% csrf_token %}
+                                        <input type="text" name="search" placeholder="Rechercher..." class="form-control">
+                                        <button class="btn btn-info btn-sm form-control fa fa-search" type="submit"></button>
+                                        {% if request.method == 'POST' %}
+                                        <a href="{% url 'order' %}" class="btn btn-outline-info form-control">Tout Afficher</a>
+                                        {% endif %}
+                                    </form>
+		                        </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="page-header float-right">
+                        	{% if items_in_cart > 0 %}
+                        	<span class="badge badge-danger font-size-16 position-absolute top-0 right-0 mr-3"> 
+								{{ items_in_cart }}
+							</span>
+							<a href="{% url 'checkout' %}">
+								<img src="{% static 'img/bag-icon.png' %}" width="15%">
+							</a>
+							{% else %}
+							<span class="badge badge-danger font-size-16 position-absolute top-0 right-0 mr-3"> 
+								0
+							</span>
+							<img src="{% static 'img/bag-icon.png' %}" width="15%">
+							{% endif %}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<div class="content animated fadeIn">
+	<div class="content col-lg-7 float-left card pt-4">
+		<div class="row">
+									{% for item in items_list %}
+									<div class="col-lg-3 border mb-4 ml-5">
+											<span class="badge badge-success font-size-16 position-absolute top-0 right-0 mr-3"> 
+											{{ item.get_price|floatformat:0 }}<span> </span>{{ ent.devise }} 
+											</span>
+										{% if item.hasStock and item.stock < 1 %}
+										<a>
+											<img class="thumbnail" src="{{ item.image.url }}" width="200" height="200">
+										</a>
+
+										<div class="p-2" style="">
+					                        <div style="">
+					                        	<a>
+					                        	{{ item.designation|capfirst }}
+					                        	</a>
+					                        </div>
+					                    {% else %}
+					                    <a href="{{ item.get_add_to_cart_url }}">
+											<img class="thumbnail" src="{{ item.image.url }}">
+										</a>
+
+										<div class="p-2" style="">
+					                        <div>
+					                        	<a href="{{ item.get_add_to_cart_url }}">
+					                        	{{ item.designation|capfirst }}
+					                        	</a>
+					                        </div>
+					                        
+					                    {% endif %}
+					                            <p>{% if item.hasStock %}
+					                            	{% if item.stock == item.stockAlert %}
+					                            		<span class="badge badge-warning">Faible stock</span>
+					                            		<span class="badge badge-dark">{{ item.stock }}</span>
+					                            	{% elif item.stock < item.stockAlert and item.stock > 0 %}
+					                            		<span class="badge badge-warning">Faible stock</span>
+					                            		<span class="badge badge-dark">{{ item.stock }}</span>
+					                            	{% elif item.stock < 1 %}
+					                            		<span class="badge badge-danger">Stock épuisé</span>
+					                            	{% elif item.stock > 0 %}
+					                                <span class="badge badge-dark">{{ item.stock }}</span><b> en stock</b>
+					                                {% endif %}
+					                               {% endif %}
+					                            </p><!--
+					                            <p class="float-left">
+					                            	<a href="{% url 'item' item.slug %}">
+					                            		<img src="{% static 'img/eye.png' %}" width="20px">
+					                            	</a>
+					                            </p>
+					                            <p class="float-right">
+					                            	<a href="{{ item.get_add_to_cart_url }}">
+					                            		<img src="{% static 'img/cart.png' %}" width="20px">
+					                            	</a>
+					                            </p>-->
+
+
+					                            
+					                        </div>
+
+									</div>
+
+									{% endfor %}
+
+									{% for item in lookup1 %}
+									<div class="col-lg-3 border mb-4 ml-5">
+											<span class="badge badge-success font-size-16 position-absolute top-0 right-0 mr-3"> 
+											{{ item.get_price|floatformat:0 }}<span> </span>{{ ent.devise }} 
+											</span>
+										{% if item.hasStock and item.stock < 1 %}
+										<a>
+											<img class="thumbnail" src="{{ item.image.url }}">
+										</a>
+
+										<div class="p-2" style="">
+					                        <div style="">
+					                        	<a>
+					                        	{{ item.designation|capfirst }}
+					                        	</a>
+					                        </div>
+					                    {% else %}
+					                    <a href="{{ item.get_add_to_cart_url }}">
+											<img class="thumbnail" src="{{ item.image.url }}">
+										</a>
+
+										<div class="p-2" style="">
+					                        <div style="">
+					                        	<a href="{{ item.get_add_to_cart_url }}">
+					                        	{{ item.designation|capfirst }}
+					                        	</a>
+					                        </div>
+					                    {% endif %}
+					                            <p>{% if item.hasStock %}
+					                            	{% if item.stock == item.stockAlert %}
+					                            		<span class="badge badge-warning">Faible stock</span>
+					                            		<span class="badge badge-dark">{{ item.stock }}</span>
+					                            	{% elif item.stock < item.stockAlert and item.stock > 0 %}
+					                            		<span class="badge badge-warning">Faible stock</span>
+					                            		<span class="badge badge-dark">{{ item.stock }}</span>
+					                            	{% elif item.stock < 1 %}
+					                            		<span class="badge badge-danger">Stock épuisé</span>
+					                            	{% elif item.stock > 0 %}
+					                                <span class="badge badge-dark">{{ item.stock }}</span><b> en stock</b>
+					                                {% endif %}
+					                               {% endif %}
+					                            </p>
+					                        </div>
+									</div>
+									{% endfor %}
+
+									{% for item in lookup2 %}
+									<div class="col-lg-3 border mb-4 ml-5">
+											<span class="badge badge-success font-size-16 position-absolute top-0 right-0 mr-3"> 
+											{{ item.get_price|floatformat:0 }}<span> </span>{{ ent.devise }} 
+											</span>
+										{% if item.hasStock and item.stock < 1 %}
+										<a>
+											<img class="thumbnail" src="{{ item.image.url }}">
+										</a>
+
+										<div class="p-2" style="">
+					                        <div style="">
+					                        	<a>
+					                        	{{ item.designation|capfirst }}
+					                        	</a>
+					                        </div>
+					                    {% else %}
+					                    <a href="{{ item.get_add_to_cart_url }}">
+											<img class="thumbnail" src="{{ item.image.url }}">
+										</a>
+
+										<div class="p-2" style="">
+					                        <div style="">
+					                        	<a href="{{ item.get_add_to_cart_url }}">
+					                        	{{ item.designation|capfirst }}
+					                        	</a>
+					                        </div>
+					                    {% endif %}
+					                            <p>{% if item.hasStock %}
+					                            	{% if item.stock == item.stockAlert %}
+					                            		<span class="badge badge-warning">Faible stock</span>
+					                            		<span class="badge badge-dark">{{ item.stock }}</span>
+					                            	{% elif item.stock < item.stockAlert and item.stock > 0 %}
+					                            		<span class="badge badge-warning">Faible stock</span>
+					                            		<span class="badge badge-dark">{{ item.stock }}</span>
+					                            	{% elif item.stock < 1 %}
+					                            		<span class="badge badge-danger">Stock épuisé</span>
+					                            	{% elif item.stock > 0 %}
+					                                <span class="badge badge-dark">{{ item.stock }}</span><b> en stock</b>
+					                                {% endif %}
+					                               {% endif %}
+					                            </p>
+					                        </div>
+									</div>
+									{% endfor %}
+
+									
+									
+                        </div>
+	</div>
+{% include 'order_summary.html' %}
+</div>
+
+
+
+
+{% endblock %}

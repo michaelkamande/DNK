@@ -1,0 +1,86 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-6">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <div class="form-inline">
+                                   <h1><strong>Loyer impayés</strong></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'appartments' %}">Appartements</a></li>
+                                    <li><a href="{% url 'rentalcontracts' %}">Contrats de bail</a></li>
+                                    <li class="active">Loyer impayés</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title float-right">
+                                <a href="{% url 'payrent' %}" class="btn btn-info"><span class="mr-2"><i class="fa fa-money"></i></span> Payer Loyer</a>
+                            </strong>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Locataire</th>
+                                        <th scope="col">Appartement</th>
+                                        <th scope="col">Loyer</th>
+                                        <th scope="col">Etat</th>
+                                        <th scope="col">Paiement prévu au</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'tenant_view' item.tenant.pk %}">{{ item.tenant.firstname }} {{ item.tenant.lastname }}</a></td>
+                                        <td><a href="{% url 'appartment_view' item.appartment.pk %}">{{ item.appartment.designation }}</a></td>
+                                        <td>{{ item.rent|floatformat:0 }} {{ ent.devise }}</td>
+                                        <td>
+                                            <span class="badge badge-danger">Impayé</span>
+                                        </td>
+                                        <td>{{ item.next_payment_on }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+

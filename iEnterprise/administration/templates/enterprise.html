@@ -1,0 +1,62 @@
+{% extends "master.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+       <div class="content">
+            <div class="animated fadeIn">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+							<div class="row">	
+									<div class="col-md-12 float-left">
+										{% if warning %}
+											{% if exp > today %}
+											Licence <p class="badge badge-warning">Expire bientôt</p> au {{ exp_2 }}
+											{% else %}
+											Licence <p class="badge badge-danger">Expirée</p>
+											{% endif %}
+										{% else %}
+											{% if exp > lifetime %}
+											Licence à vie <p class="badge badge-success">Activée</p>
+											{% elif exp > today %}
+											Licence <p class="badge badge-success">Activée</p> jusqu'au {{ exp_2 }}
+											{% else %}
+											Licence <p class="badge badge-danger">Expirée</p>
+											{% endif %}
+										{% endif %}
+										
+										<div class="media-body">
+											<img class="rounded-circle account-img mb-4" src="{{ ent.logo.url }}">
+											
+										</div>
+								
+										<h2 class="account-heading">{% if ent.name %}{{ent.name}}{% endif %}</h2>
+										<br>
+										<p class="text-secondary"><b>Forme juridique</b><br> {% if ent.legal_form %}{{ ent.legal_form }}{% endif %}</p>
+										<p class="text-secondary"><b>Tél.</b><br> {% if ent.phone %}{{ ent.phone }}{% endif %}</p>
+										<p class="text-secondary"><b>E-mail</b><br> {% if ent.email %}{{ ent.email }}{% endif %}</p>
+										<p class="text-secondary"><b>Site web</b><br> {% if ent.website %}{{ ent.website }}{% endif %}</p>
+										<p class="text-secondary"><b>Adresse</b><br> {% if ent.address %}{{ ent.address }}{% endif %}</p>
+										<p class="text-secondary"><b>Capital</b><br> {% if ent.capital %}{{ ent.capital|floatformat:0 }}{% endif %}<span> </span>{{ ent.devise }}</p>
+										<p class="text-secondary"><b>TVA en %</b><br> {% if ent.vat > 0 %} %{{ ent.vat|floatformat:0 }}{% endif %}</p>
+										<p class="text-secondary"><b>Impots sur les Revenus Locatifs en %</b><br> {% if ent.irl > 0 %}{{ ent.irl|floatformat:0 }} %{% endif %}</p>
+										<p class="text-secondary"><b>Impots fonciers en {{ ent.devise }}</b><br> {% if ent.impf > 0 %}{{ ent.impf|floatformat:0 }} {{ ent.devise }}{% endif %}</p>
+										<p class="text-secondary"><b>Devise</b><br> {{ ent.devise }}</p>
+										<!--<p class="text-secondary"><b>Format facture</b><br> {% if ent.format_facture != None %}{{ ent.format_facture }}{% endif %}</p>-->
+										<p class="text-secondary"><b>Identification</b><br> {% if ent.identification %}{{ ent.identification }}{% endif %}</p>
+										<p class="text-secondary"><b>Impot</b><br> {% if ent.vat_number %}{{ ent.vat_number }}{% endif %}</p>
+
+
+										<a href="{% url 'enterprise_mod' 1 %}" class="btn btn-info form-group">Modifier</a>
+										
+									</div>	
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+</div>
+</div>
+
+{% endblock %}

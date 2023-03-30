@@ -1,0 +1,106 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Comptabilité</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'accounting' %}">Finances</a></li>
+                                    <li class="active">Sommaire</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-lg-12 border text-center mr-5 mt-5 mb-5">
+                                    <h2><b>Solde</b></h2>
+                                    <div class="content badge badge-dark mr-5 mt-5 mb-5">
+                                        <h1><b>{{ balance|floatformat:0 }}<span> </span>{{ ent.devise }}</b></h1>
+                                    </div>
+                                
+                            </div>
+                            <div class="col-lg-12 row">
+
+                                <div class="col-lg-6 text-center border">
+                                    <h3><b>Revenus</b></h3>
+                                    <div class="content badge badge-success mr-5 mt-5 mb-5">
+                                        <h2><b>{{ income|floatformat:0 }}<span> </span>{{ ent.devise }}</b></h2>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6 text-center border">
+                                    <h3><b>Dépenses</b></h3>
+                                    <div class="content badge badge-danger mr-5 mt-5 mb-5">
+                                        <h2><b>{{ expenses|floatformat:0 }}<span> </span>{{ ent.devise }}</b></h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 row">
+
+                                
+                                <div class="col-lg-3 text-center border">
+                                    <h4><b>Appartements</b></h4>
+                                    <div class="content badge badge-light mr-5 mt-5 mb-5">
+                                        <h3><b>{{ apparts|floatformat:0 }}<span> </span>{{ ent.devise }}</b></h3>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 text-center border">
+                                    <h4><b>Génie civil</b></h4>
+                                    <div class="content badge badge-light mr-5 mt-5 mb-5">
+                                        <h3><b>0<span> </span>{{ ent.devise }}</b></h3>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 text-center border">
+                                    <h4><b>Ferme</b></h4>
+                                    <div class="content badge badge-light mr-5 mt-5 mb-5">
+                                        <h3><b>0<span> </span>{{ ent.devise }}</b></h3>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 text-center border">
+                                    <h4><b>Autres</b></h4>
+                                    <div class="content badge badge-light mr-5 mt-5 mb-5">
+                                        <h3><b>{{ other_income|floatformat:0 }}<span> </span>{{ ent.devise }}</b></h3>
+                                    </div>
+                                </div>
+
+                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,315 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Comptabilité</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'accounting' %}">Finances</a></li>
+                                    <li class="active">Résultats</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-lg-12 mr-5 mt-5 mb-5">
+                                    <h3>Compte de Résultats</h3>
+                                
+                            </div>
+                            <div class="col-lg-12 row card-body">
+                                <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" colspan="1" class="border"></th>
+                                        <th scope="col" colspan="3" class="border"><h4><b>{{ year1 }}</b></h4></th>
+                                        <th scope="col" colspan="3" class="border"><h4><b>{{ year2 }}</b></h4></th>
+                                        <th scope="col" colspan="3" class="border"><h4><b>{{ year3 }}</b></h4></th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                            <td class="border-right"><h4><b>Mois</b></h4></td>
+                                            <td><b>Recettes</b></td>             
+                                            <td><b>Dépenses</b></td>
+
+                                          
+                                            <td></td>
+                                            <td class="border-left"><b>Recettes</b></td>          
+                                            <td><b>Dépenses</b></td>
+
+
+                                            <td></td>
+                                            <td class="border-left"><b>Recettes</b></td>             
+                                            <td><b>Dépenses</b></td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Janvier</td>
+                                            <td>{% if income_year1_jan < 1 %}{% else %}{{ income_year1_jan|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_jan < 1 %}{% else %}{{ expenses_year1_jan|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_jan < 1 %}{% else %}{{ income_year2_jan|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_jan < 1 %}{% else %}{{ expenses_year2_jan|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_jan < 1 %}{% else %}{{ income_year3_jan|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_jan < 1 %}{% else %}{{ expenses_year3_jan|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Février</td>
+                                            <td>{% if income_year1_feb < 1 %}{% else %}{{ income_year1_feb|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_feb < 1 %}{% else %}{{ expenses_year1_feb|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_feb < 1 %}{% else %}{{ income_year2_feb|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_feb < 1 %}{% else %}{{ expenses_year2_feb|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_feb < 1 %}{% else %}{{ income_year3_feb|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_feb < 1 %}{% else %}{{ expenses_year3_feb|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Mars</td>
+                                            <td>{% if income_year1_mar < 1 %}{% else %}{{ income_year1_mar|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_mar < 1 %}{% else %}{{ expenses_year1_mar|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_mar < 1 %}{% else %}{{ income_year2_mar|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_mar < 1 %}{% else %}{{ expenses_year2_mar|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_mar < 1 %}{% else %}{{ income_year3_mar|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_mar < 1 %}{% else %}{{ expenses_year3_mar|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Avril</td>
+                                            <td>{% if income_year1_apr < 1 %}{% else %}{{ income_year1_apr|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_apr < 1 %}{% else %}{{ expenses_year1_apr|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_apr < 1 %}{% else %}{{ income_year2_apr|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_apr < 1 %}{% else %}{{ expenses_year2_apr|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_apr < 1 %}{% else %}{{ income_year3_apr|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_apr < 1 %}{% else %}{{ expenses_year3_apr|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Mai</td>
+                                            <td>{% if income_year1_may < 1 %}{% else %}{{ income_year1_may|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_may < 1 %}{% else %}{{ expenses_year1_may|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_may < 1 %}{% else %}{{ income_year2_may|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_may < 1 %}{% else %}{{ expenses_year2_may|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_may < 1 %}{% else %}{{ income_year3_may|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_may < 1 %}{% else %}{{ expenses_year3_may|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Juin</td>
+                                            <td>{% if income_year1_jun < 1 %}{% else %}{{ income_year1_jun|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_jun < 1 %}{% else %}{{ expenses_year1_jun|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_jun < 1 %}{% else %}{{ income_year2_jun|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_jun < 1 %}{% else %}{{ expenses_year2_jun|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_jun < 1 %}{% else %}{{ income_year3_jun|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_jun < 1 %}{% else %}{{ expenses_year3_jun|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Juillet</td>
+                                            <td>{% if income_year1_jul < 1 %}{% else %}{{ income_year1_jul|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_jul < 1 %}{% else %}{{ expenses_year1_jul|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_jul < 1 %}{% else %}{{ income_year2_jul|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_jul < 1 %}{% else %}{{ expenses_year2_jul|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_jul < 1 %}{% else %}{{ income_year3_jul|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_jul < 1 %}{% else %}{{ expenses_year3_jul|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Aout</td>
+                                            <td>{% if income_year1_aug < 1 %}{% else %}{{ income_year1_aug|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_aug < 1 %}{% else %}{{ expenses_year1_aug|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_aug < 1 %}{% else %}{{ income_year2_aug|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_aug < 1 %}{% else %}{{ expenses_year2_aug|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_aug < 1 %}{% else %}{{ income_year3_aug|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_aug < 1 %}{% else %}{{ expenses_year3_aug|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Septembre</td>
+                                            <td>{% if income_year1_sep < 1 %}{% else %}{{ income_year1_sep|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_sep < 1 %}{% else %}{{ expenses_year1_sep|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_sep < 1 %}{% else %}{{ income_year2_sep|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_sep < 1 %}{% else %}{{ expenses_year2_sep|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_sep < 1 %}{% else %}{{ income_year3_sep|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_sep < 1 %}{% else %}{{ expenses_year3_sep|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Octobre</td>
+                                            <td>{% if income_year1_oct < 1 %}{% else %}{{ income_year1_oct|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_oct < 1 %}{% else %}{{ expenses_year1_oct|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_oct < 1 %}{% else %}{{ income_year2_oct|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_oct < 1 %}{% else %}{{ expenses_year2_oct|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_oct < 1 %}{% else %}{{ income_year3_oct|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_oct < 1 %}{% else %}{{ expenses_year3_oct|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Novembre</td>
+                                           <td>{% if income_year1_nov < 1 %}{% else %}{{ income_year1_nov|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_nov < 1 %}{% else %}{{ expenses_year1_nov|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_nov < 1 %}{% else %}{{ income_year2_nov|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_nov < 1 %}{% else %}{{ expenses_year2_nov|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_nov < 1 %}{% else %}{{ income_year3_nov|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_nov < 1 %}{% else %}{{ expenses_year3_nov|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right">Decembre</td>
+                                           <td>{% if income_year1_dec < 1 %}{% else %}{{ income_year1_dec|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year1_dec < 1 %}{% else %}{{ expenses_year1_dec|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2_dec < 1 %}{% else %}{{ income_year2_dec|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>          
+                                            <td>{% if expenses_year2_dec < 1 %}{% else %}{{ expenses_year2_dec|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3_dec < 1 %}{% else %}{{ income_year3_dec|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>             
+                                            <td>{% if expenses_year3_dec < 1 %}{% else %}{{ expenses_year3_dec|floatformat:0 }}<span> </span>{{ ent.devise }}{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right"><b>Total</b></td>
+                                            <td>{% if income_year1 < 1 %}{% else %}<b>{{ income_year1|floatformat:0 }}<span> {{ ent.devise }}</span></b>{% endif %}</td>             
+                                            <td>{% if expenses_year1 < 1 %}{% else %}<b>{{ expenses_year1|floatformat:0 }}<span> {{ ent.devise }}</span></b>{% endif %}</td>
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year2 < 1 %}{% else %}<b>{{ income_year2|floatformat:0 }}<span> {{ ent.devise }}</span></b>{% endif %}</td>          
+                                            <td>{% if expenses_year2 < 1 %}{% else %}<b>{{ expenses_year2|floatformat:0 }}<span> {{ ent.devise }}</span></b>{% endif %}</td>
+
+
+                                            <td></td>
+                                            <td class="border-left">{% if income_year3 < 1 %}{% else %}<b>{{ income_year3|floatformat:0 }}<span> {{ ent.devise }}</span></b>{% endif %}</td>             
+                                            <td>{% if expenses_year3 < 1 %}{% else %}<b>{{ expenses_year3|floatformat:0 }}<span> {{ ent.devise }}</span></b>{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>   
+                                    </tr>
+                                    <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>   
+                                    </tr>
+                                    <tr>
+                                            <td class="border-right"><h3><b>Résultat</b></h3></td>
+                                            <td class="border-right" colspan="3">
+                                                {% if results_year1 > 0 %}
+                                                <h3 class="badge-success"><b>{{ results_year1|floatformat:0 }}<span> {{ ent.devise }}</span></b></h3>
+                                                {% elif results_year1 == 0 %}
+                                                {% else %}
+                                                <h3 class="badge-danger"><b>{{ results_year1|floatformat:0 }}<span> {{ ent.devise }}</span></b></h3>
+                                                {% endif %}
+                                            </td>
+                                            <td class="border-right" colspan="3">
+                                                {% if results_year2 > 0 %}
+                                                <h3 class="badge-success"><b>{{ results_year2|floatformat:0 }}<span> {{ ent.devise }}</span></b></h3>
+                                                {% elif results_year2 == 0 %}
+                                                {% else %}
+                                                <h3 class="badge-danger"><b>{{ results_year2|floatformat:0 }}<span> {{ ent.devise }}</span></b></h3>
+                                                {% endif %}
+                                            </td>
+                                            <td class="border-right" colspan="3">
+                                                {% if results_year3 > 0 %}
+                                                <h3 class="badge-success"><b>{{ results_year3|floatformat:0 }}<span> {{ ent.devise }}</span></b></h3>
+                                                {% elif results_year3 == 0 %}
+                                                {% else %}
+                                                <h3 class="badge-danger"><b>{{ results_year3|floatformat:0 }}<span> {{ ent.devise }}</span></b></h3>
+                                                {% endif %}
+                                            </td>          
+                                            
+                                    </tr>
+
+                                </tbody>
+                            </table>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

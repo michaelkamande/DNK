@@ -1,0 +1,52 @@
+{% extends "master.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+	
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Virement interne</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'transfers' %}">Virements</a></li>
+                                    <li class="active">Nouveau</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn card col-lg-6">
+            	<div class="card-body">
+            		<form method="POST">
+						{% csrf_token %}
+						<fieldset class = "form-group">
+							<legend class="border-bottom mb-4">Nouveau virement</legend>
+							{{ form|crispy }}
+						</fieldset>
+						<div class = "form-group">
+							<button class = "btn btn-info" type="submit">Effectuer</button>
+						</div>
+					</form>
+            	</div>
+            	
+    </div>
+</div>
+
+{% endblock content %}

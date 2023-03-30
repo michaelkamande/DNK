@@ -1,0 +1,33 @@
+{% extends 'master_prof.html' %}
+
+{% block content %}
+
+            <div class="content col-lg-4">
+
+                <div class="login-form">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h3 class="text-center mt-2 mb-2"><b>Création d'utilisateur</b></h3>
+                        <div class="form-group">
+                            <label></label>
+                            <input type="text" class="form-control" placeholder="Nom d'utilisateur" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label></label>
+                            <input type="email" class="form-control" placeholder="E-mail" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label></label>
+                            <input type="password" class="form-control" placeholder="Mot de passe" name="password1">
+                        </div>
+                        <div class="form-group">
+                            <label></label>
+                            <input type="password" class="form-control" placeholder="Rétapez le mot de passe" name="password2">
+                        </div>
+                        <button type="submit" class="btn btn-info btn-flat m-b-30 m-t-30">Créez !</button>
+                    </form>
+                </div>
+            </div>
+
+
+{% endblock %}

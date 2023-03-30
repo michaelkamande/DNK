@@ -1,0 +1,89 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+
+	<div class="content row">
+
+		<div class="card col-lg-5 ml-5">
+					
+		<div class="card-header">
+				
+                            <h4><strong class="card-title">Nouveau paiement</strong></h4>
+                            <!--<a href="{% url 'tenant_add' %}" class="btn btn-outline-info float-right">+ Nouveau Locataire</a>-->
+                   
+                        </div>
+		<div class="content">
+
+			<div class="card-body">
+				<form method="POST">
+					{% csrf_token %}
+					<div id="user-info">
+						<div class="">
+							{{ form|crispy }}
+						</div>
+					</div>
+					<hr>
+					<button id="form-button" class="btn btn-info btn-block" type="submit"><i class="fa fa-money"></i></span> Payer</button>
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+
+<div class="content col-lg-6 float-right card ml-5">
+		<div class="card">
+                        <div class="card-header">
+                            <h4><strong class="card-title float-right">10 Derniers Paiements</strong></h4>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Locataire</th>
+                                        <th scope="col">Appartement</th>
+                                        <th scope="col">Etat</th>
+                                        <th scope="col">Voir</th>       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td><a href="{% url 'tenant_view' item.tenant.pk %}">{{ item.tenant.firstname }} {{ item.tenant.lastname }}</a></td>
+                                            <td><a href="{% url 'appartment_view' item.appartment.pk %}">{{ item.appartment }}</a></td>
+
+                                            <td>
+                                            	{% if item.pending_payment < 1 %}
+                                            	<span class="badge badge-success">Payé</span>
+                                            	{% else %}
+                                            	<span class="badge badge-danger">Non-soldé</span>
+                                            	{% endif %}
+                                            </td>
+                                            
+                                            <td>
+                                                <a href="#" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+
+                                                <!--<a href="#" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+            
+                                                <a href="#" class="btn btn-outline-info" target="_blank"><img src="{% static 'img/invoice.jpg' %}" width="20px"></a>-->
+
+                                            </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+	</div>
+
+	</div>
+{% endblock %}

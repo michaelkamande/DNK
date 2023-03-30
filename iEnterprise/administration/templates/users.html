@@ -1,0 +1,71 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'users' %}">Utilisateurs</a></li>
+                                    <li class="active">Liste</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Utilisateurs</strong>
+                            <a href="{% url 'register' %}" class="btn btn-info float-right">+ Ajouter Utilisateur</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Utilisateur</th>
+                                        <th scope="col" class="avatar">Avatar</th>
+                                        <th scope="col">Prénom</th>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">E-mail</th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ item.user }}</td>
+                                            <td><img class="avatar rounded-circle account-img" src="{{ item.user.profile.image.url }}"  style="max-width: 25%; height: auto;"></td>
+                                            <td>{{ item.user.first_name }}</td>
+                                            <td>{{ item.user.last_name }}</td>             
+                                            <td>{{ item.user.email }}</td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

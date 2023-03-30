@@ -1,0 +1,104 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-7">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <div class="form-inline">
+                                    <a href="{% url 'rentalcontracts' %}" class="btn btn-info mr-1">Tout</a>
+                                    <a href="{% url 'rentalcontracts_on' %}" class="btn btn-outline-info mr-1">Contrats en cours</a>
+                                    <a href="{% url 'rentalcontracts_off_soon' %}" class="btn btn-outline-info mr-1">Contrats en voie d'expiration</a>
+                                    <a href="{% url 'rentalcontracts_off' %}" class="btn btn-outline-info mr-1">Contrats expirés</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'appartments' %}">Appartements</a></li>
+                                    <li><a href="{% url 'rentalcontracts' %}">Contrats de bail</a></li>
+                                    <li class="active">Liste</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Contrats de bail</strong>
+                            <a href="{% url 'rentalcontract_add' %}" class="btn btn-info float-right">+ Nouveau Contrat</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Identifiant</th>
+                                        <th scope="col">Locataire</th>
+                                        <th scope="col">Appartement</th>
+                                        <th scope="col">Fin</th>
+                                        <th scope="col">Etat</th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'rentalcontract_view' item.pk %}">Contrat #{{ item.pk }}</a></td>
+                                        <td><a href="{% url 'tenant_view' item.tenant.pk %}">{{ item.tenant }}</a></td>
+                                        <td><a href="{% url 'appartment_view' item.appartment.pk %}">{{ item.appartment.designation }}</a></td>
+                                        <td>{{ item.end_date }}</td>
+                                        <td>
+                                            {% if item.isTerminated %}
+                                            <span class="badge badge-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.end_date < alert_period and item.end_date > today %}
+                                                <span class="badge badge-warning">Expire bientôt</span>
+                                                {% elif item.end_date > today %}
+                                                <span class="badge badge-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge badge-danger">Expiré</span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'rentalcontract_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+<!--
+                                            <a href="{% url 'rentalcontract_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                            <a href="{% url 'rentalcontract_delete' item.pk %}" class="btn btn-danger">X</a>-->
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+

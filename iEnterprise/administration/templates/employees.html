@@ -1,0 +1,93 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-7">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <div class="form-inline">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'employees' %}">Travailleurs</a></li>
+                                    <li class="active">Liste</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Travailleurs</strong>
+                            <a href="{% url 'employee_add' %}" class="btn btn-info float-right">+ Nouveau Travailleur</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Employé</th>
+                                        <th scope="col">Tél.</th>
+                                        <th scope="col">Etat</th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'employee_view' item.pk %}">{{ item.firstname }} {{ item.lastname }}</a></td>
+                                        <td>{{ item.phone }}</td>
+
+                                        <td>
+                                             {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                
+                                                <span class="badge btn-success">Actif</span>
+                                                
+                                            {% endif %}
+                                        </td>
+                                 
+                                        <td>
+                                            <a href="{% url 'employee_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+

@@ -1,0 +1,110 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Détails du compte financier</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'bankaccounts' %}">Comptes financiers</a></li>
+                                    <li class="active">Vue</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+               <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right">
+                                        
+                                        <a href="{% url 'bankaccount_edit' item.pk %}" class="btn btn-info">Modifier</a>
+                                        {% if item.isClosed == False %}
+                                        <a href="{% url 'bankaccount_close' item.pk %}" class="btn btn-danger">Fermer</a>
+                                        {% endif %}
+
+                                        <!--
+                                        <a href="{% url 'bankaccount_delete' item.pk %}" class="btn btn-outline-danger">Supprimer</a>
+                                    -->
+                                        
+                                   </div>
+                                {% if item.isClosed %}
+                                            <span class="badge btn-dark">Fermé</span>
+                                            {% else %}
+                                                
+                                                <span class="badge btn-success">Ouvert</span>
+                                                
+                                            {% endif %}
+
+                            <p><h2><b>{{ item.account_name }}</b></h2><span>{{ item.account_type }}</span><br></p>
+
+
+                            <div class="row">
+                                <div class="col-md-6 float-left">
+                                    <br>
+
+                                    <b>Solde</b><br>
+                                    <span><h3><b>{{ item.balance|floatformat:0 }} {{ ent.devise }}</b></h3></span><br><br>
+
+                                    {% if item.bank_name %}
+                                    <b>Nom de la banque</b><br>
+                                    <span>{{ item.bank_name }}</span><br><br>
+                                    {% endif %}
+
+                                    {% if item.account_number %}
+                                    <b>Numéro de compte</b><br>
+                                    <span>{{ item.account_number }}</span><br><br>
+                                    {% endif %}
+
+                                    {% if item.iban %}
+                                    <b>IBAN</b><br>
+                                    <span>{{ item.iban }}</span><br><br>
+                                    {% endif %}
+
+                                    {% if item.swift %}
+                                    <b>Code BIC/SWIFT</b><br>
+                                    <span>{{ item.swift }}</span><br><br>
+                                    {% endif %}
+
+                                    {% if item.account_holder %}
+                                    <b>Nom du propriétaire du compte</b><br>
+                                    <span>{{ item.account_holder }}</span><br><br>
+                                    {% endif %}
+
+                                    <br><br>
+                                    <small><span>Créé le : {{ item.date_created|date:'d/m/Y à H:i' }}{% if item.created_by != None %}, par {{ item.created_by }}{% endif %}</span></small>
+                                    
+                                    
+                                </div>
+                                <div class="col-md-6 float-right">                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

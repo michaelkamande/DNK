@@ -1,0 +1,34 @@
+{% extends "master.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+       <div class="content">
+            <div class="animated fadeIn">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+							<div class="row">	
+									<div class="col-md-12 float-left">
+										<h2>iMart {{ version }}</h2>
+										<hr>
+                                        <br>
+                                        <br>
+                                        <h4><b>Assistance Technique</b></h4>
+                                        <br>
+										Tél. ou WhatsApp : +243 81 583 6068<br>
+										E-mail : support@kamandegroup.com									
+									</div>	
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,218 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-12">
+                        <div class="page-header">
+                            <div class="page-title">
+                                <div class="form-inline">
+                                    <center>
+                                        <h4><strong>Rapport Appartements</strong></h4>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="content">
+        <div class="card">
+                            <table class="table text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Apparts Libres</th>
+                                            <th scope="col">Apparts Occupés</th>
+                                            <th scope="col">Locataires</th>
+                                            <th scope="col">Loyer impayés / Montant</th>
+                                            <th scope="col">Revenus / {{ current_month_name }}</th>
+                                            <th scope="col">Dépenses / {{ current_month_name }}</th>
+                                            <th scope="col">IRL / {{ current_month_name }}</th>
+                                            <th scope="col">IPR / {{ current_month_name }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ apparts_free }}</td>
+                                        <td>{{ apparts_taken }}</td>
+                                        <td>{{ tenants_count }}</td>
+                                        <td>{{ rentunpaid_count }} / {{ rentunpaid_amount|floatformat:0 }} {{ ent.devise }}</td>
+                                        <td>{{ rentpaid_current_month|floatformat:0 }} {{ ent.devise }}</td>
+                                        <td>{{ total_expenses_current_month|floatformat:0 }} {{ ent.devise }}</td>
+                                        <td>{{ irl_current_month|floatformat:0 }} {{ ent.devise }}</td>
+                                        <td>{{ ipr_current_month|floatformat:0 }} {{ ent.devise }}</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card float-left col-lg-5">
+                        <div class="card-header">
+                            <strong class="card-title">Revenus locatifs</strong>
+                        </div>
+                        <div class="card-body">
+                            Total
+                            <h3><b>{{ rentpaid|floatformat:0 }} {{ ent.devise }}</b></h3>
+                            <br>
+                            <div>
+                            	<div class="float-left">
+                            		{{ current_month_name }} {{ current_year }}
+		                            <h4><b>{{ rentpaid_current_month|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+		                            Année {{ current_year }}
+		                            <h4><b>{{ rentpaid_this_year|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+                            	</div>
+                            	<div class="float-right">
+                            		{{ last_month_name }} {{ current_year }}
+		                            <h4><b>{{ rentpaid_last_month|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+		                            Année {{ last_year }}
+		                            <h4><b>{{ rentpaid_last_year|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+                            	</div>
+                            </div>
+
+                     
+                        </div>
+                    </div>
+
+                    <div class="card float-right col-lg-5">
+                        <div class="card-header">
+                            <strong class="card-title">Dépenses sur les appartements</strong>
+                        </div>
+                        <div class="card-body">
+                           Total
+                            <h3><b>{{ total_expenses|floatformat:0 }} {{ ent.devise }}</b></h3>
+                            <br>
+                            <div>
+                            	<div class="float-left">
+                            		{{ current_month_name }} {{ current_year }}
+		                            <h4><b>{{ total_expenses_current_month|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+		                            Année {{ current_year }}
+		                            <h4><b>{{ total_expenses_this_year|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+                            	</div>
+                            	<div class="float-right">
+                            		{{ last_month_name }} {{ current_year }}
+		                            <h4><b>{{ total_expenses_last_month|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+		                            Année {{ last_year }}
+		                            <h4><b>{{ total_expenses_last_year|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+                            	</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card float-left col-lg-5">
+                        <div class="card-header">
+                            <strong class="card-title">Loyer impayés</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="float-left">
+                            		Locataire{{ rentunpaid_count|pluralize }}
+		                            <h3><b>{{ rentunpaid_count }}</b></h3>
+		                            <br>
+		                            
+                            	</div>
+                            	<div class="float-right">
+                            		Montant en attente
+		                            <h3><b>{{ rentunpaid_amount|floatformat:0 }} {{ ent.devise }}</b></h3>
+		                            <br>
+		                            
+                            	</div>
+                            	{% if rentunpaid_count > 0 %}
+                            	<table class="table table-striped text-center">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Locataire</th>
+                                                <!--<th scope="col">Appartement</th>-->
+                                                <th scope="col">Loyer</th>
+                                                <th scope="col">Depuis</th>                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in rentunpaid %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td><a href="{% url 'tenant_view' item.tenant.id %}">
+                                                	{{ item.tenant }}
+                                                </a></td>
+                                                <!--
+                                                <td><a href="{% url 'appartment_view' item.appartment.id %}">
+                                                	{{ item.appartment }}
+                                                </a></td>-->
+
+                                                <td>{{ item.rent|floatformat:0 }} {{ ent.devise }}</td>
+                                                
+                                                <td>{{ item.next_payment_on|date:'d/m/Y' }}</td>
+                                                <!--
+                                                <td>
+                                                    <a href="{% url 'rentalcontract_view' item.pk %}" class="btn btn-light"><img src="{% static 'img/eye.png' %}" width="20px"></a>
+                                                </td>-->
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                            	{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card float-right col-lg-5">
+                        <div class="card-header">
+                            <strong class="card-title">Impots sur les Revenus Locatifs</strong>
+                        </div>
+                        <div class="card-body">
+                            Total
+                            <h3><b>{{ irl_total|floatformat:0 }} {{ ent.devise }}</b></h3>
+                            <br>
+                            <div>
+                            	<div class="float-left">
+                            		{{ current_month_name }} {{ current_year }}
+		                            <h4><b>{{ irl_current_month|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+		                            Année {{ current_year }}
+		                            <h4><b>{{ irl_this_year|floatformat:0 }} {{ ent.devise }}</b></h4>
+                            	</div>
+                            	<div class="float-right">
+                            		{{ last_month_name }} {{ current_year }}
+		                            <h4><b>{{ irl_last_month|floatformat:0 }} {{ ent.devise }}</b></h4>
+		                            <br>
+		                            Année {{ last_year }}
+		                            <h4><b>{{ irl_last_year|floatformat:0 }} {{ ent.devise }}</b></h4>
+                            	</div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        
+    </div>
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}

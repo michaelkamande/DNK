@@ -1,0 +1,95 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load groups_check %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Détails Appartement</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'appartments' %}">Appartements</a></li>
+                                    <li class="active">Vue</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+               <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right">
+                                        
+                                        <a href="{% url 'appartment_edit' item.pk %}" class="btn btn-info">Modifier</a>
+
+                                        {% if request.user|has_group:"admin" %}
+                                        <a href="{% url 'appartment_delete' item.pk %}" class="btn btn-outline-danger">Supprimer</a>
+                                        {% endif %}
+                                        
+                                   </div>
+                        
+                                                {% if item.isAvailable %}
+                                                <span class="badge btn-success">Disponible</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Occupé</span>
+                                                {% endif %}
+
+                            <p><h2><b>{{ item.designation }}</b></h2><span>{{ item.appartment_type }}</span><br></p>
+
+
+                            <div class="row">
+                                <div class="col-md-6 float-left">
+                                    <br>
+                                    <b>Description</b><br>
+                                    <p>{{ item.description }}</p>
+                                    <br><br>
+
+                                    <b>Loyer</b><br>
+                                    <span>{{ item.rent|floatformat:0 }} {{ ent.devise }}</span><br><br>
+
+                                    {% if item.rent_A %}
+                                    <small><span>Categorie A: {{ item.rent_A|floatformat:0 }} {{ ent.devise }}</span></small><br>
+                                    {% endif %}
+
+                                    {% if item.rent_B %}
+                                    <small><span>Categorie B: {{ item.rent_B|floatformat:0 }} {{ ent.devise }}</span></small>
+                                    <br>
+                                    {% endif %}
+
+                                    {% if item.rent_C %}
+                                    <small><span>Categorie C: {{ item.rent_C|floatformat:0 }} {{ ent.devise }}</span></small><br>
+                                    {% endif %}
+
+                                </div>
+                                <div class="col-md-6 float-right">                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

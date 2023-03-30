@@ -1,0 +1,89 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0 pt-3">
+                    <div class="col-sm-7">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <div class="form-inline">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'salaries' %}">Salaires</a></li>
+                                    <li class="active">Liste</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong class="card-title">Salaires</strong>
+                            <a href="{% url 'salary_add' %}" class="btn btn-info float-right">+ Nouveau paiement</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Salarié</th>
+                                        <th scope="col">Période</th>
+                                        <th scope="col">Montant</th>
+                                        <th scope="col">Compte</th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'employee_view' item.employee.pk %}">{{ item.employee }}</a></td>
+                                        <td>{{ item.month }} {{ item.year }}</td>
+                                        <td>{{ item.amount|floatformat:0 }} {{ ent.devise }}</td>
+                                        <td>{% if item.account %}{{ item.account }}{% endif %}</td>
+                                 
+                                        <td>
+                                            <a href="{% url 'salary_edit' item.pk %}" class="btn btn-light"><img src="{% static 'img/edit.png' %}" width="20px"></a>
+                                            <!--
+                                            <a href="{% url 'salary_delete' item.pk %}" class="btn btn-outline-danger">X</a>
+                                        -->
+
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+

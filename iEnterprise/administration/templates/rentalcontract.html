@@ -1,0 +1,96 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load groups_check %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Détails du contrat</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'rentalcontracts' %}">Contrats de bail</a></li>
+                                    <li class="active">Vue</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+               <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="float-right">
+                                        
+                                        <a href="{% url 'rentalcontract_edit' item.pk %}" class="btn btn-info">Modifier</a>
+                                        {% if item.isTerminated == False %}
+                                        <a href="{% url 'rentalcontract_resiliate' item.pk %}" class="btn btn-danger">Terminer</a>
+                                        {% endif %}
+
+                                        {% if request.user|has_group:"admin" %}
+                                        <a href="{% url 'rentalcontract_delete' item.pk %}" class="btn btn-outline-danger">Supprimer</a>
+                                        {% endif %}
+                                        
+                                   </div>
+                                {% if item.isTerminated %}
+                                            <span class="badge btn-dark">Terminé</span>
+                                            {% else %}
+                                                {% if item.end_date > today %}
+                                                <span class="badge btn-success">Actif</span>
+                                                {% else %}
+                                                <span class="badge btn-danger">Expiré</span>
+                                                {% endif %}
+                                            {% endif %}
+                            <p><h2><b>Contrat #{{ item.pk }}</b></h2><span>Du {{ item.start_date|date:'d/m/Y' }} au {{ item.end_date|date:'d/m/Y' }}</span><br></p>
+
+
+                            <div class="row">
+                                <div class="col-md-6 float-left">
+                                    <br>
+                                    <b>Locataire</b><br>
+                                    <span><a href="{% url 'tenant_view' item.tenant.pk %}">{{ item.tenant }}</a></span><br>
+                                    <span><a href="{% url 'appartment_view' item.appartment.pk %}">{{ item.appartment }}</a></span><br><br>
+
+                                    <b>Loyer</b><br>
+                                    <span>{{ item.rent|floatformat:0 }} {{ ent.devise }}</span><br><br>
+                                    <b>Garantie</b><br>
+                                    <span>{{ item.deposit|floatformat:0 }} {{ ent.devise }}</span><br><br>
+                                    {% if item.isTerminated is False %}
+                                    <b>Prochain paiement</b><br>
+                                    <span>{{ item.next_payment_on|date:'d/m/Y' }}</span><br>
+                                    {% endif %}
+
+                                    <br><br>
+                                    <small><span>Créé le : {{ item.date_created|date:'d/m/Y à H:i' }}{% if item.created_by != None %}, par {{ item.created_by }}{% endif %}</span></small>
+                                    
+                                    
+                                </div>
+                                <div class="col-md-6 float-right">                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

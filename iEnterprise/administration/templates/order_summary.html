@@ -1,0 +1,95 @@
+
+
+	<div class="content col-lg-4 float-right card ml-3">
+		<div>
+			{% if object.get_cart_total > 0 %}
+			<div class="card-header">
+				<center>
+                            <a href="{% url 'checkout' %}" class="btn btn-info">Valider Commande</a>
+                            <a href="{% url 'cancel_order' %}" class="btn btn-outline-danger">Annuler Commande</a>
+                            
+                    </center>
+                        </div>
+                        {% endif %}
+			<div class="text-center">
+                            <strong class="content btn-outline-info">
+                            	<font size="6px">
+                            		#{% if items_in_cart > 0 %}{{ items_in_cart }}{% else %}0{% endif %} - Total: 
+	                            	{% if object.get_cart_total %}
+										{{ object.get_cart_total|floatformat:0 }}<span> </span>{{ ent.devise }}
+									{% else %}
+										0<span> </span>{{ ent.devise }}
+									{% endif %}
+	                            </font>
+                            </strong>
+                        </div>
+			<table class="table table-striped text-center">
+                                <thead>
+                                	{% if object.get_cart_total %}
+                                    <tr>
+                                        <!--<th scope="col">#</th>-->
+                                        <th scope="col">Article</th>
+                                        <th scope="col">Prix</th>
+                                        <th scope="col">Qté</th>
+                                        <th scope="col">Total</th>                                 
+                                    </tr>
+                                    {% endif %}
+                                </thead>
+                                <tbody>
+                                    {% for item in object.items.all %}
+                                    <tr>
+                                            <!--<td>{{ forloop.counter }}</td>-->
+                                            <td>{{ item.item.designation }}</td>
+                                            
+                                            <td>
+                                            	
+                                            	{% if item.item.discount_price %}
+													{{ item.item.discount_price|floatformat:0 }}{{ ent.devise }}
+													<p class="btn-outline-danger"><small>Promotion</small></p>
+												{% else %}
+													{{ item.item.sell_price|floatformat:0 }}{{ ent.devise }}
+												{% endif %}
+                                            </td>
+
+                                            <td>
+                                            	<div>
+                                            		{{ item.quantity }}
+                                            	</div>
+                                            	<div>
+                                            		{% for i in items_list %}
+                                            		{% if i.slug == item.item.slug %}
+                                            			{% if i.hasStock %}
+                                                        {% if i.stock < 1 %}
+                                            			{% else %}
+                                            			<a href="{% url 'add_to_cart' item.item.slug %}" class="btn btn-light border"><b>+</b></a>
+                                            			{% endif %}
+                                                        {% else %}
+                                                        <a href="{% url 'add_to_cart' item.item.slug %}" class="btn btn-light border"><b>+</b></a>
+                                                        {% endif %}
+                                            		{% endif %}
+                                            		{% endfor %}
+                                            		{% if item.quantity > 1 %}	
+                                            		<a href="{% url 'remove_single_product_from_cart' item.item.slug %}" class="btn btn-dark border"><b>-</b></a>
+                                            		{% else %}
+                                            		<a href="{% url 'remove_single_product_from_cart' item.item.slug %}" class="btn btn-outline-danger">X</a>
+                                            		{% endif %}
+                                            	</div>
+                                            </td>
+                                            <td>
+                                            	
+                                            	{% if item.item.discount_price  %}
+													{{ item.get_total_discount|floatformat:0 }}{{ ent.devise }}
+												{% else %}
+													{{ item.get_total|floatformat:0 }}{{ ent.devise }}
+												{% endif %}
+                                            </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <hr>
+                            <div class="text-center mb-3">
+                            	iMart &copy; {% now "Y" %} <a href="https://www.kamandegroup.com" target="_blank">KITS SARL</a>
+                            </div>
+		</div>
+	</div>

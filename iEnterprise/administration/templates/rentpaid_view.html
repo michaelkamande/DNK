@@ -1,0 +1,114 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+ {% if warning %}
+            {% include 'license_message.html' %}
+        {% endif %}
+
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="row m-0">
+                    <div class="col-sm-4">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Détails du paiement</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="page-header float-right">
+                            <div class="page-title">
+                                <ol class="breadcrumb text-right">
+                                    <li><a href="{% url 'dashboard' %}">Tableau de bord</a></li>
+                                    <li><a href="{% url 'tenants' %}">Locataires</a></li>
+                                    <li><a href="{% url 'tenant_view' item.tenant.pk %}">{{ item.tenant }}</a></li>
+                                    <li class="active">Paiement #{{ item.id }}</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            
+                            Locataire
+                            {% if item.tenant != None %}
+                            <h2><a href="{% url 'tenant_view' item.tenant.pk %}"><b>{{ item.tenant }}</b></a></h2><br>
+                            {% else %}
+                            <h3>N/A</h3><br>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-7 float-left">
+                                    <p>Réf #{{ item.id }}<br>Date: {{ item.date_created }}</p>
+                                    {% if item.pending_payment < 1 %}
+                                    <p class="badge badge-success">Payé</p>
+                                    {% else %}
+                                    <p class="badge badge-danger">Non-soldé</p>
+                                    {% endif %}
+                                    <br><br>
+
+                                    <table class="table table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Appartement</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Mois</th>
+                                        <th scope="col">P.T</th>                                 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ item.appartment }}</td>
+                                        <td>{{ item.paying_for }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.due_amount|floatformat:0 }} $</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                            <span>Par : {{ item.created_by }}</span>
+                                    <br><br><br>
+   
+                                            {% if item.pending_payment > 0 %}
+                                            <a href="{% url 'rentpaid_edit' item.pk %}" class="btn btn-outline-dark">Modifier</a>
+                                            {% endif %}
+
+                                            <a href="{% url 'invoicerentold' item.pk %}" class="btn btn-info" target="_blank"><i class="fa fa-download"></i> Facture</a>
+                                        
+                         
+                                </div>
+                                <div class="col-md-5 float-right">
+                                    <h3><strong>Total : {{ item.due_amount|floatformat:0 }} $</strong></h3>
+                                    {% if item.discount > 0 %}
+                                    <small>Remise :  {{ item.discount|floatformat:0 }} $</small><br>
+                                    {% endif %}
+                                    <br>
+                                    {% if item.isPaid == False %}
+                                    <small>Payé : {{ item.paid_amount|floatformat:0 }} $</small><br>
+                                    {% endif %}
+                                    {% if item.pending_payment > 0 %}
+                                    <small>Reste : {{ item.pending_payment|floatformat:0 }} $</small><br>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
